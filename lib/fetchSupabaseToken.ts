@@ -11,6 +11,8 @@ export async function getTwitchToken(): Promise<string> {
     .select('*')
     .eq('id', 1)
     .single();
+  
+  console.log('[Supabase] Fetched token:', data);
 
   if (error || !data) {
     throw new Error('Could not fetch token from Supabase');
@@ -34,6 +36,8 @@ export async function getTwitchToken(): Promise<string> {
     });
 
     const newToken = await res.json();
+    console.log('[Supabase] Refreshed token:', newToken);
+    
     if (!newToken.access_token) throw new Error('Failed to refresh token');
 
     const updateRes = await supabase
