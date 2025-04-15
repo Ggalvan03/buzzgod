@@ -1,14 +1,11 @@
-import fs from 'fs';
 import tmi from 'tmi.js';
 import { NextRequest, NextResponse } from 'next/server';
+import { getTwitchToken } from '@/lib/fetchSupabaseToken';
 
 export async function POST(req: NextRequest) {
-  let accessToken: string;
+  const accessToken = await getTwitchToken();
 
-  try {
-    const tokenData = fs.readFileSync('twitch-token.json', 'utf-8');
-    accessToken = JSON.parse(tokenData).access_token;
-  } catch {
+  if (!accessToken) {
     return NextResponse.json({ error: 'No Twitch access token available' }, { status: 500 });
   }
 
