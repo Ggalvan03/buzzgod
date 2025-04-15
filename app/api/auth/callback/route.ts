@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFileSync } from 'fs';
 
 
 export async function GET(req: NextRequest) {
@@ -24,11 +23,15 @@ export async function GET(req: NextRequest) {
   const tokenData = await tokenRes.json();
   console.log("Twitch token response:", tokenData);
 
-  writeFileSync('twitch-token.json', JSON.stringify({
-    access_token: tokenData.access_token,
-    refresh_token: tokenData.refresh_token,
-    expires_in: tokenData.expires_in,
-    timestamp: new Date().toISOString()
-  }));
+  await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/save-token`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      access_token: tokenData.access_token,
+      refresh_token: tokenData.refresh_token,
+      expires_in: tokenData.expires_in,
+      timestamp: new Date().toISOString()
+    })
+  });
   return NextResponse.redirect("http://localhost:3000/");
 }

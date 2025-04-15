@@ -1,21 +1,13 @@
 const tmi = require("tmi.js");
-
-// You can move this to a more persistent store later
-let accessToken = "";
-
-export function setTwitchAccessToken(token: string) {
-  accessToken = token;
-}
+import { getTwitchToken } from "./fetchSupabaseToken"; // Adjust the import path as necessary
 
 export async function sendMessageToTwitch(message: string) {
-  if (!accessToken) {
-    throw new Error("No Twitch access token available");
-  }
+  const accessToken = await getTwitchToken();
 
   const client = new tmi.Client({
     identity: {
-      username: "buzzgod_bot", // Replace with your bot username
-      password: `oauth:${accessToken}`, // Access token from Twitch
+      username: "buzzgod_bot", // Replace with your bot's username
+      password: `oauth:${accessToken}`,
     },
     channels: [process.env.TWITCH_CHANNEL_NAME || "buzzgod_bs"],
   });
