@@ -3,7 +3,7 @@
 export default function LoginPage() {
   const loginWithTwitch = () => {
     const clientId = "93xjk0i7ed2zq8okttge7rtbq30c8h";
-    const redirectUri = "http://localhost:3000/api/auth/callback";
+    const redirectUri = process.env.NEXT_PUBLIC_BASE_URL + "/api/auth/callback";
     const scopes = "chat:read chat:edit";
     const twitchAuthUrl =
       `https://id.twitch.tv/oauth2/authorize` +
