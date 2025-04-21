@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-
+import { startYoutubeBotScheduler } from "@/lib/youtubebot";
 export default function Home() {
+  startYoutubeBotScheduler();
   const [message, setMessage] = useState("");
 
   const handleSendMessage = async () => {
