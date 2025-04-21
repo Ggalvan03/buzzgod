@@ -33,7 +33,7 @@ export default function Home() {
       <h1 className="text-3xl font-bold mb-6 text-purple-400">Welcome to Buzzgod’s Stream</h1>
 
       <div className="w-full max-w-md bg-[#1f1f23] rounded-lg p-6 flex flex-col gap-4">
-        <p className="text-lg font-semibold text-white">Send a message to the streamer</p>
+        <p className="text-lg font-semibold text-white">Send a message</p>
         <input
           type="text"
           placeholder="Type your message..."
