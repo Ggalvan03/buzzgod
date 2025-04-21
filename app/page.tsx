@@ -1,9 +1,17 @@
 "use client";
-import { useState } from "react";
-import { startYoutubeBotScheduler } from "@/lib/youtubebot";
+import { useState, useEffect } from "react";
+
 export default function Home() {
-  startYoutubeBotScheduler();
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    fetch("/api/cron")
+      .then((res) => {
+        if (!res.ok) throw new Error("Cron call failed");
+        console.log("Cron job triggered on page load.");
+      })
+      .catch((err) => console.error("Error triggering cron job:", err));
+  }, []);
 
   const handleSendMessage = async () => {
     if (!message.trim()) return;
